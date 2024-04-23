@@ -1,5 +1,3 @@
-Certainly! Here's a README.md file based on your description:
-
 ```markdown
 # AutoStreamML
 
