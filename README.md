@@ -1,6 +1,54 @@
-Hey there. Just to clarify. SourceData is the upload of the data to your machine that the user have uploaded. Steps To run the program and test it out. Download the folder and place it on the Desktop. 
-Run VSCode and open a new file on it which is MLAnalysis.py After words get to the Terminal(PowerShell) and write a command: streamlit run MLAnalysis.py and the localHost should open on your browser.
-Then you can add any csv file up to 200mb of size and test it out the feauture for Pandas analysis and Training of different ML models for a specific variable from the dataset. P.S. the The bigger the csv longer it will take to analyze it and Train it.
-For Example The csv file called "UploadData" is the dataset I used and since its quit large it took it 3mins to analyse with pandas and it took around 10mins to train multiple Algorithms on specific variable from the dataset. 
-In the Dataset I used, I train the models on a variable "CUSTOMER_REVIEWS" and out of all models the Classification had the highest accuracy score of 0.63 By knowing this we can see which models can be used for our specific business goal, so later in production we can focus on one specific Model to use for our busnises purpose.
-Additionaly after finishing Training and Analysis in the folder with the application the txt file called logs will appear. Also after training the Programm shows which model has the highest score and in Download section you will be able to download the best Train Model.
+Certainly! Here's a README.md file based on your description:
+
+```markdown
+# AutoStreamML
+
+AutoStreamML is a Streamlit application that allows you to build an automated ML pipeline for data analysis and model training.
+
+## Description
+
+This application provides a user-friendly interface to upload a dataset, perform automated exploratory data analysis (EDA) using Pandas profiling, and train machine learning models for classification tasks. It offers insights into the dataset's characteristics and allows users to select the target variable for model training.
+
+## How to Run
+
+To run this application locally, follow these steps:
+
+1. Download or clone this repository to your local machine.
+2. Navigate to the project directory in your terminal.
+3. Install the required Python packages by running:
+   ```
+   pip install -r requirements.txt
+   ```
+4. Run the Streamlit app by executing the following command:
+   ```
+   streamlit run MLAnalysis.py
+   ```
+5. The application will open in your default web browser at `http://localhost:8501`.
+
+## Usage
+
+- **Upload:** Upload your dataset for analysis.
+- **Analytics:** Perform automated exploratory data analysis.
+- **ML-training:** Train machine learning models on the dataset.
+- **Download:** Download the best-trained model for future use.
+
+**Note:** Larger datasets may take longer to analyze and train models.
+
+## Example
+
+- Dataset: "UploadData.csv"
+- Target variable: "CUSTOMER_REVIEWS"
+- Classification model accuracy: 0.63
+
+By analyzing the dataset and training various models, you can determine the best model for your business goals and download it for future use.
+
+**Logs:** After training, a "logs.txt" file will appear in the application folder.
+
+## Screenshots
+
+Screenshots of the application interface can be found in the `screenshots` directory.
+
+Feel free to explore the application and experiment with different datasets and models!
+```
+
+This README includes sections for description, how to run the application, usage instructions, an example scenario, and a note about larger datasets. You can adjust the content and formatting as needed.
