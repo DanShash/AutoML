@@ -50,5 +50,3 @@ Screenshots of the application interface can be found in the `screenshots` direc
 
 Feel free to explore the application and experiment with different datasets and models!
 ```
-
-This README includes sections for description, how to run the application, usage instructions, an example scenario, and a note about larger datasets. You can adjust the content and formatting as needed.
