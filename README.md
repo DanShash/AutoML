@@ -36,7 +36,7 @@ To run this application locally, follow these steps:
 
 - Dataset: "UploadData.csv"
 - Target variable: "CUSTOMER_REVIEWS"
-- Classification model accuracy: 0.63
+- Classification model accuracy: with up to 90%
 
 By analyzing the dataset and training various models, you can determine the best model for your business goals and download it for future use.
 
