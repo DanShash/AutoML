@@ -1,12 +1,10 @@
----
 
 # 🚀 AutoStreamML: Automated Machine Learning Web App
 
-**AutoStreamML** is a user-friendly Streamlit web application designed to automate machine learning workflows — from dataset upload and preprocessing to training, evaluation, and model downloading. Whether you're exploring regression or classification tasks, AutoStreamML provides a seamless end-to-end experience with just a few clicks.
+**AutoStreamML** is a user-friendly Streamlit web application designed to automate machine learning workflows  from dataset upload and preprocessing to training, evaluation, and model downloading. Whether you're exploring regression or classification tasks, AutoStreamML provides a seamless end-to-end experience with just a few clicks.
 
 > ⚠️ **Live Prediction Feature**: Currently under active development and will be available soon!
 
----
 
 ## 🌟 Key Features
 
