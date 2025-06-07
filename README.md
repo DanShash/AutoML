@@ -1,50 +1,94 @@
-```markdown
-# AutoStreamML
+---
 
-AutoStreamML is a Streamlit application that allows you to build an automated ML pipeline for data analysis and model training.
+# 🚀 AutoStreamML: Automated Machine Learning Web App
 
-## Description
+**AutoStreamML** is a user-friendly Streamlit web application designed to automate machine learning workflows — from dataset upload and preprocessing to training, evaluation, and model downloading. Whether you're exploring regression or classification tasks, AutoStreamML provides a seamless end-to-end experience with just a few clicks.
 
-This application provides a user-friendly interface to upload a dataset, perform automated exploratory data analysis (EDA) using Pandas profiling, and train machine learning models for classification tasks. It offers insights into the dataset's characteristics and allows users to select the target variable for model training.
+> ⚠️ **Live Prediction Feature**: Currently under active development and will be available soon!
 
-## How to Run
+---
 
-To run this application locally, follow these steps:
+## 🌟 Key Features
 
-1. Download or clone this repository to your local machine.
-2. Navigate to the project directory in your terminal.
-3. Install the required Python packages by running:
-   ```
-   pip install -r requirements.txt
-   ```
-4. Run the Streamlit app by executing the following command:
-   ```
-   streamlit run MLAnalysis.py
-   ```
-5. The application will open in your default web browser at `http://localhost:8501`.
+* 📁 Upload and preview CSV datasets
+* 🧼 Automatic preprocessing and setup with PyCaret
+* 🎯 Support for both **Regression** and **Classification** tasks
+* 🤖 Model training with automatic selection of the best-performing model
+* 📊 Feature importance visualization (when supported by the model)
+* 💾 Download trained model (`.pkl`) and metadata (`model_meta.json`)
+* 🧪 (Coming Soon!) Live prediction from user input using trained models
 
-## Usage
+---
 
-- **Upload:** Upload your dataset for analysis.
-- **Analytics:** Perform automated exploratory data analysis.
-- **ML-training:** Train machine learning models on the dataset.
-- **Download:** Download the best-trained model for future use.
+## 🔧 Tech Stack
 
-**Note:** Larger datasets may take longer to analyze and train models.
+* [Streamlit](https://streamlit.io/)
+* [PyCaret](https://pycaret.org/)
+* [pandas](https://pandas.pydata.org/)
+* [scikit-learn](https://scikit-learn.org/)
+* [Matplotlib](https://matplotlib.org/)
+* [ydata-profiling](https://github.com/ydataai/ydata-profiling)
 
-## Example
+---
 
-- Dataset: "UploadData.csv"
-- Target variable: "CUSTOMER_REVIEWS"
-- Classification model accuracy: with up to 90%
+## 🖥️ How to Run Locally
 
-By analyzing the dataset and training various models, you can determine the best model for your business goals and download it for future use.
+### 1. Clone the repository
 
-**Logs:** After training, a "logs.txt" file will appear in the application folder.
-
-## Screenshots
-
-Screenshots of the application interface can be found in the `screenshots` directory.
-
-Feel free to explore the application and experiment with different datasets and models!
+```bash
+git clone https://github.com/your-username/AutoStreamML.git
+cd AutoStreamML
 ```
+
+### 2. Set up a virtual environment (optional but recommended)
+
+```bash
+python -m venv venv
+venv\Scripts\activate   # On Windows
+# source venv/bin/activate  # On macOS/Linux
+```
+
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+If you encounter version conflicts, use the pre-tested environment setup:
+
+```bash
+pip install numpy==1.26.0 pandas==2.1.3 matplotlib==3.7.3 scipy==1.11.4
+pip install pycaret==3.3.2 ydata-profiling==4.6.4 streamlit==1.45.1 streamlit-pandas-profiling==0.1.3
+```
+
+### 4. Launch the app
+
+```bash
+streamlit run MLAnalysis.py
+```
+
+
+---
+
+## 📌 Status
+
+* ✅ Model upload, training, comparison, and download
+* ✅ Feature importance visualization
+* 🚧 **Live Prediction UI** — in progress
+* 🔜 Future: Dataset versioning, report exports, interactive dashboards
+
+---
+
+## 🤝 Contributing
+
+Interested in improving this project or suggesting a feature? Feel free to open issues or submit a pull request!
+
+---
+
+## 📫 Contact
+
+**Daniels Shashkovs**
+Aspiring Machine Learning Engineer
+
+
+---
