@@ -251,98 +251,85 @@ if choice == "Live Prediction":
 
     if model_file and meta_file:
         try:
-            # File Handling: Save uploaded files to disk
+            # Save uploaded files
             with open("uploaded_model.pkl", "wb") as f:
                 f.write(model_file.read())
             with open("uploaded_metadata.json", "w") as f:
-                # Decode JSON file content with UTF-8
                 try:
                     content = meta_file.read().decode("utf-8")
                     f.write(content)
                 except UnicodeDecodeError:
-                    st.error("Failed to decode metadata file. Ensure it’s a valid JSON file.")
+                    st.error("❌ Failed to decode metadata file. Make sure it’s valid JSON.")
                     st.stop()
 
-            # Load Model and Metadata
-            try:
-                model = joblib.load("uploaded_model.pkl")
-            except Exception as e:
-                st.error(f"Failed to load model: {str(e)}")
-                st.stop()
+            # Load model and metadata
+            model = joblib.load("uploaded_model.pkl")
+            with open("uploaded_metadata.json") as f:
+                metadata = json.load(f)
 
-            try:
-                with open("uploaded_metadata.json") as f:
-                    metadata = json.load(f)
-            except json.JSONDecodeError as e:
-                st.error(f"Invalid JSON in metadata file: {str(e)}")
-                st.stop()
-
-            # Extract metadata
+            # Extract features and metadata
             features = metadata.get("feature_names", [])
             explanations = metadata.get("feature_explanations", {})
             value_ranges = metadata.get("value_ranges", {})
 
             if not features:
-                st.warning("No feature names found in metadata. Please check the JSON file.")
+                st.warning("⚠️ Metadata missing required feature list.")
                 st.stop()
 
-            # Collect user inputs via Streamlit
+            # Collect input
             user_input = {}
             st.subheader("✏️ Input Features")
-
             for feat in features:
                 exp = explanations.get(feat, "")
                 if feat == "ocean_proximity":
                     user_input[feat] = st.selectbox(
-                        f"{feat} - {exp}",
-                        ["<1H OCEAN", "INLAND", "ISLAND", "NEAR BAY", "NEAR OCEAN"]
+                        f"{feat} - {exp}", ["<1H OCEAN", "INLAND", "ISLAND", "NEAR BAY", "NEAR OCEAN"]
                     )
                 elif feat in value_ranges:
                     try:
                         min_val, max_val = value_ranges[feat]
                         user_input[feat] = st.slider(
                             f"{feat} - {exp}",
-                            float(min_val),
-                            float(max_val),
-                            float((min_val + max_val) / 2)
+                            float(min_val), float(max_val), float((min_val + max_val) / 2)
                         )
-                    except (ValueError, TypeError) as e:
-                        st.warning(f"Slider not available for {feat}: {str(e)}. Using text input instead.")
+                    except (ValueError, TypeError):
+                        st.warning(f"⚠️ Slider error for {feat}, using text input.")
                         user_input[feat] = st.text_input(f"{feat} - {exp}")
                 else:
                     user_input[feat] = st.text_input(f"{feat} - {exp}")
 
+            # 🗺️ Optional Location Map
+            st.subheader("🗺️ Location Map (Latitude & Longitude)")
+            if "latitude" in user_input and "longitude" in user_input:
+                try:
+                    lat = float(user_input["latitude"])
+                    lon = float(user_input["longitude"])
+                    if -90 <= lat <= 90 and -180 <= lon <= 180:
+                        st.pydeck_chart(pdk.Deck(
+                            map_style="mapbox://styles/mapbox/light-v9",
+                            initial_view_state=pdk.ViewState(latitude=lat, longitude=lon, zoom=10, pitch=50),
+                            layers=[
+                                pdk.Layer("ScatterplotLayer",
+                                          data=pd.DataFrame({"lat": [lat], "lon": [lon]}),
+                                          get_position='[lon, lat]', get_color='[200, 30, 0, 160]', get_radius=200)
+                            ]
+                        ))
+                    else:
+                        st.warning("⚠️ Coordinates out of bounds.")
+                except ValueError:
+                    st.warning("⚠️ Latitude/Longitude must be numeric.")
+
+            # ✅ Predict button
+            if st.button("Predict"):
+                try:
+                    input_df = pd.DataFrame([user_input])
+                    input_df = input_df.apply(pd.to_numeric, errors='ignore')
+                    prediction = model.predict(input_df)[0]
+                    st.success(f"🎯 Prediction: `{prediction}`")
+                except Exception as e:
+                    st.error("❌ Prediction failed.")
+                    st.text(str(e))
+
         except Exception as e:
-            st.error(f"An unexpected error occurred: {str(e)}")
-
-# 🗺️ Optional Location Map (if lat/lon present)
-st.subheader("🗺️ Location Map (Latitude & Longitude)")
-
-if "latitude" in user_input and "longitude" in user_input:
-    try:
-        lat = float(user_input["latitude"])
-        lon = float(user_input["longitude"])
-        if -90 <= lat <= 90 and -180 <= lon <= 180:
-            st.pydeck_chart(pdk.Deck(
-                map_style="mapbox://styles/mapbox/light-v9",
-                initial_view_state=pdk.ViewState(latitude=lat, longitude=lon, zoom=10, pitch=50),
-                layers=[
-                    pdk.Layer("ScatterplotLayer", data=pd.DataFrame({"lat": [lat], "lon": [lon]}),
-                              get_position='[lon, lat]', get_color='[200, 30, 0, 160]', get_radius=200)
-                ]
-            ))
-        else:
-            st.warning("Coordinates are out of bounds. Latitude must be between -90 and 90, longitude between -180 and 180.")
-    except ValueError:
-        st.warning("Latitude and Longitude must be valid numbers.")
-
-# ✅ Prediction button
-if st.button("Predict"):
-    try:
-        input_df = pd.DataFrame([user_input])
-        input_df = input_df.apply(pd.to_numeric, errors='ignore')
-        prediction = model.predict(input_df)[0]
-        st.success(f"🎯 Prediction: `{prediction}`")
-    except Exception as e:
-        st.error("❌ Prediction failed.")
-        st.text(str(e))
+            st.error("❌ An error occurred.")
+            st.text(str(e))
